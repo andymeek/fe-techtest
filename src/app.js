@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Multiplier from './components/Multiplier.jsx'
+import Multiplier from './components/Multiplier/Multiplier.jsx'
 
 // source goes here
 const app = function () {
