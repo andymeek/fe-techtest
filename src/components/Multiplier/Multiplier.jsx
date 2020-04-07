@@ -1,40 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
 import sc from 'styled-components'
 
-import { breakpoints } from './constants'
+import Buttons from '../Buttons/Buttons.jsx'
+import { breakpoints } from '../../common/constants'
 
 const Container = sc.div`
     display: flex;
     flex-direction: column;
-    background-color: green;
+    margin: 0 25% auto;
 
     @media (min-width: ${breakpoints.medium}) {
         flex-flow: row wrap;
-        div {
-            flex: 1 0 calc(50% - 20px);
-        }
-        background-color: yellow;
-    }
-
-    @media (min-width: ${breakpoints.large}) {
-        background-color: blue;
-        div {
-            flex: 1 0 calc(33.333% - 20px);
-        }
     }
 `
 
-function Multiplier() {
+function Multiplier({ limit = 144 }) {
+    const [numbers, setNumbers] = useState([...Array(limit)].reduce(
+        (acc, _, itemIndex) => [
+            ...acc, {
+                number: itemIndex + 1,
+                selected: false,
+            }],
+        []
+    ))
+
+    const onClick = (selectedNumber) => setNumbers(numbers.map(
+        ({ number }) => ({
+            number,
+            selected: number % selectedNumber === 0,
+        })
+    ))
+
     return (
         <Container>
-            <div>Col 1</div>
-            <div>Col 2</div>
-            <div>Col 3</div>
-            <div>Col 4</div>
-            <div>Col 5</div>
-            <div>Col 6</div>
+            <Buttons numbers={numbers} onClick={onClick} />
         </Container>
     );
 }
 
+export { Container }
 export default Multiplier
